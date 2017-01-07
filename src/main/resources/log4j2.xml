@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" strict="true" name="XMLConfigTest"
-               packages="org.apache.logging.log4j.test">
+<Configuration status="DEBUG" strict="true">
   <Properties>
-  	<Property name="root">logger.log</Property>
-    <Property name="filename1">package1.log</Property>
-    <Property name="filename2">package2.log</Property>
+  	<Property name="root">logs/logger.log</Property>
+    <Property name="filename1">logs/package1.log</Property>
+    <Property name="filename2">logs/package2.log</Property>
   </Properties>
  
   <Appenders>
@@ -20,11 +19,11 @@
   </Appenders>
  
   <Loggers>
-    <Logger name="eu.kielczewski.example" level="debug" additivity="false">
+    <Logger name="com.springboot.example" level="debug" additivity="false">
       <AppenderRef ref="package1"/>
     </Logger>
  
-    <Logger name="eu.kielczewski.example.controller" level="debug" additivity="true">
+    <Logger name="com.springboot.example.controller" level="debug" additivity="true">
       <AppenderRef ref="package2"/>
     </Logger>
  
