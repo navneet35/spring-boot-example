@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" strict="true" name="XMLConfigTest"
+               packages="org.apache.logging.log4j.test">
+  <Properties>
+  	<Property name="root">logger.log</Property>
+    <Property name="filename1">package1.log</Property>
+    <Property name="filename2">package2.log</Property>
+  </Properties>
+ 
+  <Appenders>
+    <Appender type="File" name="rootLogger" fileName="${root}">
+        <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n" />
+    </Appender>
+    <Appender type="File" name="package1" fileName="${filename1}">
+        <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n" />
+    </Appender>
+    <Appender type="File" name="package2" fileName="${filename2}">
+        <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n" />
+    </Appender>
+  </Appenders>
+ 
+  <Loggers>
+    <Logger name="eu.kielczewski.example" level="debug" additivity="false">
+      <AppenderRef ref="package1"/>
+    </Logger>
+ 
+    <Logger name="eu.kielczewski.example.controller" level="debug" additivity="true">
+      <AppenderRef ref="package2"/>
+    </Logger>
+ 
+    <Root level="INFO">
+      <AppenderRef ref="rootLogger"/>
+    </Root>
+  </Loggers>
+ 
+</Configuration>
