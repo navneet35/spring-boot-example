@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG" strict="true">
+<Configuration status="DEBUG">
   <Properties>
+  	<Property name="log-path">logs</Property>
   	<Property name="root">logs/logger.log</Property>
-    <Property name="filename1">logs/package1.log</Property>
-    <Property name="filename2">logs/package2.log</Property>
+    <Property name="application">logs/application.log</Property>
+    <Property name="service">logs/service.log</Property>
   </Properties>
  
   <Appenders>
-    <Appender type="File" name="rootLogger" fileName="${root}">
+    <RollingFile type="File" name="rootLogger" fileName="${root}" filePattern="${log-path}/$${date:yyyy-MM}/logger-%d{dd-MM-yyyy_HH-mm-ss}-%i.log">
         <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n" />
-    </Appender>
-    <Appender type="File" name="package1" fileName="${filename1}">
+        <Policies>
+			<SizeBasedTriggeringPolicy size="250 MB" />
+		</Policies>
+		<DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+    
+    <RollingFile type="File" name="application" fileName="${application}" filePattern="${log-path}/$${date:yyyy-MM}/application-%d{yyyy-MM-dd}-%i.log">
         <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n" />
-    </Appender>
-    <Appender type="File" name="package2" fileName="${filename2}">
+        <Policies>
+			<SizeBasedTriggeringPolicy size="250 MB" />
+		</Policies>
+		<DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+    
+    <RollingFile type="File" name="service" fileName="${service}"  filePattern="${log-path}/$${date:yyyy-MM}/service-%d{yyyy-MM-dd}-%i.log">>
         <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n" />
-    </Appender>
+        <Policies>
+			<SizeBasedTriggeringPolicy size="250 MB" />
+		</Policies>
+		<DefaultRolloverStrategy max="10"/>
+    </RollingFile>
   </Appenders>
  
   <Loggers>
-    <Logger name="com.springboot.example" level="debug" additivity="false">
-      <AppenderRef ref="package1"/>
+    <Logger name="com.springboot.example" level="DEBUG" additivity="false">
+      <AppenderRef ref="application"/>
     </Logger>
  
-    <Logger name="com.springboot.example.controller" level="debug" additivity="true">
-      <AppenderRef ref="package2"/>
+    <Logger name="com.springboot.example.service" level="DEBUG" additivity="true">
+      <AppenderRef ref="service"/>
     </Logger>
  
     <Root level="INFO">
